@@ -111,7 +111,31 @@
   .dd-opt small { margin-left: auto; color: var(--dim); font-size: 11px; }
   .dd-opt small.stable { color: var(--gold); }
   .dd-opt small.devtag { color: var(--ember); }
-  .dd-opt[aria-selected="true"] { background: var(--panel); box-shadow: inset 3px 0 0 var(--gold); }
+  .dd-opt[disabled] {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+  .dd-opt[disabled] small { color: var(--dim); }
+  .dd-opt[disabled]:hover { background: none; }
+  .dd-opt[disabled]:active { background: none; }
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--deep);
+    color: var(--text);
+    border: 2px solid var(--ember);
+    padding: 14px 22px;
+    font-family: var(--body);
+    font-size: 14px;
+    box-shadow: 6px 6px 0 #000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 100;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
   .filecard { background: var(--panel); border: 2px solid var(--line); border-top: 4px solid var(--gold-deep); padding: 26px; display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
   .filecard img { width: 72px; height: 72px; image-rendering: pixelated; border: 2px solid var(--line); }
   .filecard h2 { font-family: var(--display); font-size: 18px; letter-spacing: 1px; margin: 0 0 6px; }
@@ -222,28 +246,28 @@
           <span class="dd-val">1.0.3 stable</span>
           <span class="chev">▾</span>
         </button>
-        <div class="dd-list" role="listbox" aria-labelledby="release-label">
-          <button class="dd-opt" role="option" aria-selected="true" data-value="1.0.3">
-            <img src="assets/logo.png" alt="">
-            <span>1.0.3</span>
-            <small class="stable">STABLE</small>
-          </button>
-          <button class="dd-opt" role="option" aria-selected="false" data-value="1.0.2">
-            <img src="assets/logo.png" alt="">
-            <span>1.0.2</span>
-            <small class="devtag">DEV ONLY</small>
-          </button>
-          <button class="dd-opt" role="option" aria-selected="false" data-value="1.0.1">
-            <img src="assets/logo.png" alt="">
-            <span>1.0.1</span>
-            <small class="devtag">DEV ONLY</small>
-          </button>
-          <button class="dd-opt" role="option" aria-selected="false" data-value="1.0.0">
-            <img src="assets/logo.png" alt="">
-            <span>1.0.0</span>
-            <small class="devtag">DEV ONLY</small>
-          </button>
-        </div>
+<div class="dd-list" role="listbox" aria-labelledby="release-label">
+            <button class="dd-opt" role="option" aria-selected="true" data-value="1.0.3">
+              <img src="assets/logo.png" alt="">
+              <span>1.0.3</span>
+              <small class="stable">STABLE</small>
+            </button>
+            <button class="dd-opt" role="option" aria-selected="false" data-value="1.0.2" disabled>
+              <img src="assets/logo.png" alt="">
+              <span>1.0.2</span>
+              <small>Only for testing</small>
+            </button>
+            <button class="dd-opt" role="option" aria-selected="false" data-value="1.0.1" disabled>
+              <img src="assets/logo.png" alt="">
+              <span>1.0.1</span>
+              <small>Only for testing</small>
+            </button>
+            <button class="dd-opt" role="option" aria-selected="false" data-value="1.0.0" disabled>
+              <img src="assets/logo.png" alt="">
+              <span>1.0.0</span>
+              <small>Only for testing</small>
+            </button>
+          </div>
       </div>
     </div>
   </div>
@@ -310,6 +334,10 @@
   btn.addEventListener("click", function () {
     setMenu(!menu.classList.contains("open"));
   });
+  var toast = document.createElement("div");
+  toast.className = "toast";
+  toast.textContent = "This release is only for testing, it has bugs. Use the stable 1.0.3 instead.";
+  document.body.appendChild(toast);
   var state = { game: "1.21.11", loader: "paper", release: "1.0.3" };
   function closeAll(except) {
     var all = document.querySelectorAll(".dd.open");
@@ -334,6 +362,13 @@
     var opts = root.querySelectorAll(".dd-opt");
     for (var i = 0; i < opts.length; i++) {
       opts[i].addEventListener("click", function () {
+        if (this.getAttribute("disabled")) {
+          toast.classList.add("show");
+          setTimeout(function () {
+            toast.classList.remove("show");
+          }, 2500);
+          return;
+        }
         var opt = this;
         var group = opt.parentElement.querySelectorAll(".dd-opt");
         for (var j = 0; j < group.length; j++) {
@@ -343,7 +378,6 @@
         state[key] = opt.getAttribute("data-value");
         val.textContent = opt.querySelector("span").textContent + (key === "release" && state[key] === "1.0.3" ? " stable" : "");
         img.setAttribute("src", opt.querySelector("img").getAttribute("src"));
-        labels[key] = val.textContent;
         root.classList.remove("open");
         btn.setAttribute("aria-expanded", "false");
         refresh();
