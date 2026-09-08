@@ -60,16 +60,58 @@
   .lede { color: var(--dim); max-width: 60ch; margin: 0 0 34px; }
   .pickers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
   .field label { display: block; font-family: var(--display); font-size: 12px; letter-spacing: 2px; color: var(--gold); margin-bottom: 8px; }
-  .field select {
+  .dd { position: relative; }
+  .dd-btn {
     width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
     background: var(--panel);
     color: var(--text);
     border: 2px solid var(--line);
-    padding: 12px 14px;
+    padding: 10px 14px;
     font-family: var(--body);
     font-size: 14px;
+    cursor: pointer;
+    text-align: left;
   }
-  .field select:focus { outline: none; border-color: var(--gold-deep); }
+  .dd-btn:hover, .dd.open .dd-btn { border-color: var(--gold-deep); }
+  .dd-btn img { width: 26px; height: 26px; image-rendering: pixelated; }
+  .dd-btn .chev { margin-left: auto; color: var(--gold); font-size: 12px; }
+  .dd-list {
+    display: none;
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    z-index: 30;
+    background: var(--deep);
+    border: 2px solid var(--gold-deep);
+    box-shadow: 6px 6px 0 #000;
+  }
+  .dd.open .dd-list { display: block; }
+  .dd-opt {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    background: none;
+    border: none;
+    border-bottom: 1px solid var(--line);
+    color: var(--text);
+    padding: 10px 14px;
+    font-family: var(--body);
+    font-size: 14px;
+    cursor: pointer;
+    text-align: left;
+  }
+  .dd-opt:last-child { border-bottom: none; }
+  .dd-opt:hover { background: var(--panel); }
+  .dd-opt img { width: 26px; height: 26px; image-rendering: pixelated; }
+  .dd-opt small { margin-left: auto; color: var(--dim); font-size: 11px; }
+  .dd-opt small.stable { color: var(--gold); }
+  .dd-opt small.devtag { color: var(--ember); }
+  .dd-opt[aria-selected="true"] { background: var(--panel); box-shadow: inset 3px 0 0 var(--gold); }
   .filecard { background: var(--panel); border: 2px solid var(--line); border-top: 4px solid var(--gold-deep); padding: 26px; display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
   .filecard img { width: 72px; height: 72px; image-rendering: pixelated; border: 2px solid var(--line); }
   .filecard h2 { font-family: var(--display); font-size: 18px; letter-spacing: 1px; margin: 0 0 6px; }
@@ -129,27 +171,80 @@
 
   <div class="pickers">
     <div class="field">
-      <label for="game">GAME VERSION</label>
-      <select id="game">
-        <option value="1.21.11" selected>1.21.11</option>
-      </select>
+      <label id="game-label">GAME VERSION</label>
+      <div class="dd" id="dd-game">
+        <button class="dd-btn" aria-haspopup="listbox" aria-expanded="false">
+          <img src="assets/dl-icons/bukkit.png" alt="">
+          <span class="dd-val">1.21.11</span>
+          <span class="chev">▾</span>
+        </button>
+        <div class="dd-list" role="listbox" aria-labelledby="game-label">
+          <button class="dd-opt" role="option" aria-selected="true" data-value="1.21.11">
+            <img src="assets/dl-icons/bukkit.png" alt="">
+            <span>1.21.11</span>
+            <small class="stable">LATEST</small>
+          </button>
+        </div>
+      </div>
     </div>
     <div class="field">
-      <label for="loader">LOADER</label>
-      <select id="loader">
-        <option value="paper" selected>Paper</option>
-        <option value="purpur">Purpur</option>
-        <option value="spigot">Spigot</option>
-      </select>
+      <label id="loader-label">LOADER</label>
+      <div class="dd" id="dd-loader">
+        <button class="dd-btn" aria-haspopup="listbox" aria-expanded="false">
+          <img src="assets/dl-icons/paper.png" alt="">
+          <span class="dd-val">Paper</span>
+          <span class="chev">▾</span>
+        </button>
+        <div class="dd-list" role="listbox" aria-labelledby="loader-label">
+          <button class="dd-opt" role="option" aria-selected="true" data-value="paper">
+            <img src="assets/dl-icons/paper.png" alt="">
+            <span>Paper</span>
+            <small class="stable">SUPPORTED</small>
+          </button>
+          <button class="dd-opt" role="option" aria-selected="false" data-value="purpur">
+            <img src="assets/dl-icons/purpur.png" alt="">
+            <span>Purpur</span>
+            <small>SHOULD WORK</small>
+          </button>
+          <button class="dd-opt" role="option" aria-selected="false" data-value="spigot">
+            <img src="assets/dl-icons/bukkit.png" alt="">
+            <span>Spigot</span>
+            <small>UNTESTED</small>
+          </button>
+        </div>
+      </div>
     </div>
     <div class="field">
-      <label for="release">RELEASE</label>
-      <select id="release">
-        <option value="1.0.3" selected>1.0.3 stable</option>
-        <option value="1.0.2">1.0.2 dev testing only</option>
-        <option value="1.0.1">1.0.1 dev testing only</option>
-        <option value="1.0.0">1.0.0 dev testing only</option>
-      </select>
+      <label id="release-label">RELEASE</label>
+      <div class="dd" id="dd-release">
+        <button class="dd-btn" aria-haspopup="listbox" aria-expanded="false">
+          <img src="assets/logo.png" alt="">
+          <span class="dd-val">1.0.3 stable</span>
+          <span class="chev">▾</span>
+        </button>
+        <div class="dd-list" role="listbox" aria-labelledby="release-label">
+          <button class="dd-opt" role="option" aria-selected="true" data-value="1.0.3">
+            <img src="assets/logo.png" alt="">
+            <span>1.0.3</span>
+            <small class="stable">STABLE</small>
+          </button>
+          <button class="dd-opt" role="option" aria-selected="false" data-value="1.0.2">
+            <img src="assets/logo.png" alt="">
+            <span>1.0.2</span>
+            <small class="devtag">DEV ONLY</small>
+          </button>
+          <button class="dd-opt" role="option" aria-selected="false" data-value="1.0.1">
+            <img src="assets/logo.png" alt="">
+            <span>1.0.1</span>
+            <small class="devtag">DEV ONLY</small>
+          </button>
+          <button class="dd-opt" role="option" aria-selected="false" data-value="1.0.0">
+            <img src="assets/logo.png" alt="">
+            <span>1.0.0</span>
+            <small class="devtag">DEV ONLY</small>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -215,9 +310,56 @@
   btn.addEventListener("click", function () {
     setMenu(!menu.classList.contains("open"));
   });
-  var game = document.getElementById("game");
-  var loader = document.getElementById("loader");
-  var release = document.getElementById("release");
+  var state = { game: "1.21.11", loader: "paper", release: "1.0.3" };
+  function closeAll(except) {
+    var all = document.querySelectorAll(".dd.open");
+    for (var i = 0; i < all.length; i++) {
+      if (all[i] !== except) {
+        all[i].classList.remove("open");
+        all[i].querySelector(".dd-btn").setAttribute("aria-expanded", "false");
+      }
+    }
+  }
+  function wire(id, key) {
+    var root = document.getElementById(id);
+    var btn = root.querySelector(".dd-btn");
+    var val = root.querySelector(".dd-val");
+    var img = root.querySelector(".dd-btn img");
+    btn.addEventListener("click", function () {
+      var willOpen = !root.classList.contains("open");
+      closeAll(root);
+      root.classList.toggle("open", willOpen);
+      btn.setAttribute("aria-expanded", willOpen ? "true" : "false");
+    });
+    var opts = root.querySelectorAll(".dd-opt");
+    for (var i = 0; i < opts.length; i++) {
+      opts[i].addEventListener("click", function () {
+        var opt = this;
+        var group = opt.parentElement.querySelectorAll(".dd-opt");
+        for (var j = 0; j < group.length; j++) {
+          group[j].setAttribute("aria-selected", "false");
+        }
+        opt.setAttribute("aria-selected", "true");
+        state[key] = opt.getAttribute("data-value");
+        val.textContent = opt.querySelector("span").textContent + (key === "release" && state[key] === "1.0.3" ? " stable" : "");
+        img.setAttribute("src", opt.querySelector("img").getAttribute("src"));
+        labels[key] = val.textContent;
+        root.classList.remove("open");
+        btn.setAttribute("aria-expanded", "false");
+        refresh();
+      });
+    }
+  }
+  document.addEventListener("click", function (ev) {
+    if (!ev.target.closest(".dd")) {
+      closeAll(null);
+    }
+  });
+  document.addEventListener("keydown", function (ev) {
+    if (ev.key === "Escape") {
+      closeAll(null);
+    }
+  });
   var dlbtn = document.getElementById("dlbtn");
   var dllabel = document.getElementById("dllabel");
   var filename = document.getElementById("filename");
@@ -229,8 +371,8 @@
     spigot: "Spigot: untested. The jar targets the Paper API and may miss Paper only calls."
   };
   function refresh() {
-    var rel = release.value;
-    var load = loader.value;
+    var rel = state.release;
+    var load = state.loader;
     loadernote.innerHTML = notes[load];
     if (rel !== "1.0.3") {
       filename.textContent = "vaultspire-" + rel + ".jar";
@@ -241,14 +383,14 @@
       return;
     }
     filename.textContent = "vaultspire-1.0.3.jar";
-    filemeta.textContent = "Minecraft " + game.value + " / " + load.charAt(0).toUpperCase() + load.slice(1) + " / 62 KB / MIT";
+    filemeta.textContent = "Minecraft " + state.game + " / " + state.loader.charAt(0).toUpperCase() + state.loader.slice(1) + " / 62 KB / MIT";
     dllabel.textContent = "Download";
     dlbtn.classList.remove("off");
     dlbtn.setAttribute("href", "downloads/vaultspire-1.0.3.jar");
   }
-  game.addEventListener("change", refresh);
-  loader.addEventListener("change", refresh);
-  release.addEventListener("change", refresh);
+  wire("dd-game", "game");
+  wire("dd-loader", "loader");
+  wire("dd-release", "release");
   refresh();
 })();
 </script>
