@@ -10,152 +10,543 @@
 <meta property="og:image" content="assets/og.png">
 <link rel="icon" href="assets/logo.png">
 <style>
-  :root { --bg: #14101f; --panel: #1e1633; --deep: #120d20; --gold: #e8b64c; --purple: #9b5cf0; --cyan: #57e6d9; --text: #efe9ff; --dim: #a79fd1; }
+  @font-face {
+    font-family: "Boxel";
+    src: url("assets/Fonts/Boxel_v0.1/Boxel_v0.1_beta.ttf") format("truetype");
+    font-display: swap;
+  }
+  :root {
+    --bg: #0d0e0a;
+    --panel: #151610;
+    --deep: #0a0b08;
+    --line: #2a2c20;
+    --gold: #e8b64c;
+    --gold-dim: #8a6a25;
+    --green: #7de08a;
+    --text: #ece7d4;
+    --dim: #9a937a;
+    --display: "Boxel", "Courier New", monospace;
+    --body: ui-monospace, "Cascadia Mono", "Courier New", monospace;
+  }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
-  body { margin: 0; background: var(--bg); color: var(--text); font-family: "Courier New", monospace; }
-  nav { position: sticky; top: 0; background: #0c0916; border-bottom: 3px solid var(--purple); padding: 10px 24px; display: flex; gap: 18px; align-items: center; z-index: 10; }
-  nav img { width: 32px; height: 32px; image-rendering: pixelated; }
-  nav b { color: var(--gold); letter-spacing: 2px; }
-  nav a { color: var(--dim); text-decoration: none; }
-  nav a:hover { color: var(--cyan); }
-  .wrap { max-width: 1020px; margin: 0 auto; padding: 24px; }
-  header.hero { text-align: center; padding: 24px 16px 8px; }
-  header.hero img.banner { width: 100%; max-height: 300px; object-fit: cover; image-rendering: pixelated; border: 4px solid var(--gold); }
-  .logo { width: 128px; height: 128px; image-rendering: pixelated; margin-top: -64px; border: 4px solid var(--purple); background: var(--panel); }
-  h1 { color: var(--gold); letter-spacing: 3px; margin: 12px 0 4px; font-size: 2.2em; }
-  .sub { color: var(--dim); margin: 0 0 16px; }
-  .btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin: 16px 0 8px; }
-  a.btn { display: inline-block; padding: 12px 20px; background: var(--purple); color: #fff; text-decoration: none; border: 3px solid var(--gold); cursor: pointer; }
-  a.btn.gold { background: var(--gold); color: #221a08; }
-  section.card { background: var(--panel); border: 3px solid var(--purple); padding: 20px; margin: 20px 0; }
-  section.card h2 { color: var(--cyan); margin-top: 0; letter-spacing: 1px; }
-  section.card img.wide { width: 100%; image-rendering: pixelated; border: 3px solid var(--gold); margin-bottom: 12px; }
-  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
-  .tile { background: var(--deep); border: 2px solid var(--gold); padding: 12px; text-align: center; }
-  .tile img { width: 64px; height: 64px; image-rendering: pixelated; }
-  .tile h3 { color: var(--gold); margin: 8px 0 4px; font-size: 1em; }
-  .tile p { color: var(--dim); font-size: 0.9em; margin: 0; }
-  .gear-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 12px 0; }
-  .gear-row img { width: 64px; height: 64px; image-rendering: pixelated; border: 2px solid var(--purple); background: var(--deep); }
-  table.cmds { width: 100%; border-collapse: collapse; }
-  table.cmds td { border: 2px solid var(--purple); padding: 8px 10px; vertical-align: top; }
-  table.cmds td:first-child { color: var(--gold); white-space: nowrap; }
-  table.cmds td:last-child { color: var(--dim); }
-  code, pre { background: #0c0916; color: var(--cyan); }
-  code { padding: 2px 6px; }
-  pre { padding: 12px; overflow-x: auto; line-height: 1.7; }
-  .packrow { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
-  .packrow img { width: 96px; height: 96px; image-rendering: pixelated; border: 3px solid var(--gold); }
-  footer { text-align: center; color: var(--dim); padding: 24px; }
-  footer a { color: var(--gold); }
+  body {
+    margin: 0;
+    background: var(--bg);
+    background-image:
+      linear-gradient(rgba(232, 182, 76, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(232, 182, 76, 0.045) 1px, transparent 1px);
+    background-size: 32px 32px;
+    color: var(--text);
+    font-family: var(--body);
+    font-size: 15px;
+    line-height: 1.65;
+  }
+  a { color: var(--gold); }
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: #0a0b08;
+    border-bottom: 2px solid var(--line);
+  }
+  .topbar-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 20px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); }
+  .brand img { width: 30px; height: 30px; image-rendering: pixelated; }
+  .brand span { font-family: var(--display); font-size: 17px; letter-spacing: 2px; color: var(--text); }
+  .brand span em { font-style: normal; color: var(--gold); }
+  .navlinks { display: flex; gap: 4px; margin-left: 8px; }
+  .navlinks a {
+    color: var(--dim);
+    text-decoration: none;
+    font-size: 13px;
+    padding: 8px 12px;
+    border: 2px solid transparent;
+  }
+  .navlinks a:hover { color: var(--gold); border-color: var(--line); background: var(--panel); }
+  .nav-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+  .ver {
+    font-family: var(--display);
+    font-size: 12px;
+    color: var(--green);
+    border: 2px solid var(--line);
+    padding: 5px 10px;
+    background: var(--deep);
+    white-space: nowrap;
+  }
+  .ver i { display: inline-block; width: 7px; height: 7px; background: var(--green); margin-right: 7px; animation: blink 1.6s steps(2) infinite; }
+  @keyframes blink { 50% { opacity: 0.25; } }
+  .iconbtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border: 2px solid var(--line);
+    background: var(--panel);
+    color: var(--dim);
+  }
+  .iconbtn:hover { color: var(--gold); border-color: var(--gold-dim); }
+  .iconbtn svg { width: 20px; height: 20px; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-family: var(--display);
+    font-size: 13px;
+    letter-spacing: 1px;
+    padding: 10px 18px;
+    background: var(--gold);
+    color: #191204;
+    text-decoration: none;
+    border: 2px solid var(--gold);
+    box-shadow: 4px 4px 0 #000;
+    cursor: pointer;
+  }
+  .btn:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 #000; }
+  .btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 #000; }
+  .btn.ghost { background: transparent; color: var(--gold); }
+  .btn svg { width: 17px; height: 17px; }
+  .menubtn { display: none; }
+  .mobilemenu { display: none; border-top: 2px solid var(--line); padding: 8px 20px 14px; }
+  .mobilemenu.open { display: block; }
+  .mobilemenu a { display: block; color: var(--dim); text-decoration: none; padding: 10px 4px; border-bottom: 1px solid var(--line); }
+  .mobilemenu a:hover { color: var(--gold); }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px 40px; }
+  .hero { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 28px; padding: 48px 0 12px; align-items: center; }
+  .kicker {
+    display: inline-block;
+    font-family: var(--display);
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: var(--green);
+    border: 2px solid var(--line);
+    background: var(--deep);
+    padding: 6px 12px;
+    margin-bottom: 18px;
+  }
+  h1 {
+    font-family: var(--display);
+    font-size: clamp(38px, 6vw, 64px);
+    line-height: 1.05;
+    letter-spacing: 3px;
+    margin: 0 0 14px;
+    color: var(--text);
+  }
+  h1 .accent { color: var(--gold); }
+  .lede { color: var(--dim); max-width: 46ch; margin: 0 0 22px; }
+  .lede b { color: var(--text); font-weight: normal; }
+  .cta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+  .console {
+    background: var(--deep);
+    border: 2px solid var(--line);
+    padding: 12px 14px;
+    font-size: 13px;
+    color: var(--dim);
+    max-width: 46ch;
+  }
+  .console .p { color: var(--gold); }
+  .cursor { display: inline-block; width: 9px; height: 16px; background: var(--green); vertical-align: -3px; animation: blink 1.1s steps(2) infinite; }
+  .hero-art { position: relative; }
+  .hero-art img.main {
+    width: 100%;
+    image-rendering: pixelated;
+    border: 2px solid var(--line);
+    display: block;
+    animation: floaty 5s ease-in-out infinite;
+  }
+  @keyframes floaty { 50% { transform: translateY(-8px); } }
+  .hero-art .stamp {
+    position: absolute;
+    right: -10px;
+    bottom: -16px;
+    background: var(--gold);
+    color: #191204;
+    font-family: var(--display);
+    font-size: 12px;
+    letter-spacing: 1px;
+    padding: 8px 14px;
+    border: 2px solid #000;
+    box-shadow: 4px 4px 0 #000;
+  }
+  .ticker {
+    margin: 30px 0 6px;
+    border-top: 2px solid var(--line);
+    border-bottom: 2px solid var(--line);
+    overflow: hidden;
+    background: var(--deep);
+  }
+  .ticker-inner {
+    display: inline-block;
+    white-space: nowrap;
+    padding: 9px 0;
+    font-size: 13px;
+    color: var(--dim);
+    animation: tick 30s linear infinite;
+  }
+  .ticker-inner b { color: var(--gold); font-weight: normal; }
+  @keyframes tick { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  section.block { padding: 34px 0 6px; }
+  .sec-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 18px; }
+  .sec-num { font-family: var(--display); font-size: 13px; color: var(--deep); background: var(--gold); padding: 4px 10px; }
+  h2 { font-family: var(--display); font-size: clamp(20px, 3vw, 28px); letter-spacing: 2px; margin: 0; }
+  .sec-head p { margin: 0 0 0 auto; color: var(--dim); font-size: 13px; }
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .card {
+    background: var(--panel);
+    border: 2px solid var(--line);
+    padding: 18px;
+    transition: transform 0.15s ease, border-color 0.15s ease;
+  }
+  .card:hover { transform: translateY(-4px); border-color: var(--gold-dim); }
+  .card .ic {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--gold-dim);
+    background: var(--deep);
+    margin-bottom: 14px;
+    color: var(--gold);
+  }
+  .card .ic svg { width: 24px; height: 24px; }
+  .card h3 { font-family: var(--display); font-size: 15px; letter-spacing: 1px; margin: 0 0 8px; color: var(--text); }
+  .card p { margin: 0; color: var(--dim); font-size: 13.5px; }
+  .card p b { color: var(--text); font-weight: normal; }
+  .gearstrip {
+    display: flex;
+    gap: 12px;
+    align-items: stretch;
+    background: var(--panel);
+    border: 2px solid var(--line);
+    padding: 16px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+  }
+  .gearstrip img { width: 56px; height: 56px; image-rendering: pixelated; border: 2px solid var(--line); background: var(--deep); }
+  .gearstrip div { flex: 1; min-width: 220px; }
+  .gearstrip h3 { font-family: var(--display); font-size: 14px; letter-spacing: 1px; margin: 0 0 6px; }
+  .gearstrip p { margin: 0; color: var(--dim); font-size: 13.5px; }
+  .shot { border: 2px solid var(--line); margin-top: 14px; }
+  .shot img { width: 100%; display: block; image-rendering: pixelated; }
+  .shot figcaption { padding: 10px 14px; color: var(--dim); font-size: 13px; border-top: 2px solid var(--line); background: var(--deep); }
+  .cmdtable { width: 100%; border-collapse: collapse; background: var(--panel); }
+  .cmdtable td { border: 2px solid var(--line); padding: 10px 14px; vertical-align: top; font-size: 13.5px; }
+  .cmdtable tr td:first-child { color: var(--gold); white-space: nowrap; }
+  .cmdtable tr td:last-child { color: var(--dim); }
+  .cmdtable tr:hover td { background: #191a12; }
+  .steps { counter-reset: step; list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+  .steps li {
+    counter-increment: step;
+    background: var(--panel);
+    border: 2px solid var(--line);
+    padding: 14px 16px 14px 60px;
+    position: relative;
+    color: var(--dim);
+    font-size: 13.5px;
+  }
+  .steps li::before {
+    content: counter(step, decimal-leading-zero);
+    position: absolute;
+    left: 14px;
+    top: 14px;
+    font-family: var(--display);
+    font-size: 14px;
+    color: var(--gold);
+  }
+  .steps code, pre code { background: #0a0b08; color: var(--green); padding: 2px 7px; font-size: 12.5px; }
+  pre.snippet {
+    background: var(--deep);
+    border: 2px solid var(--line);
+    padding: 14px 16px;
+    overflow-x: auto;
+    font-size: 12.5px;
+    line-height: 1.8;
+    color: var(--green);
+    margin: 14px 0 0;
+  }
+  .packband {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 20px;
+    background: var(--panel);
+    border: 2px solid var(--gold-dim);
+    padding: 20px;
+    align-items: center;
+  }
+  .packband img { width: 120px; height: 120px; image-rendering: pixelated; border: 2px solid var(--line); }
+  .packband h3 { font-family: var(--display); font-size: 16px; letter-spacing: 1px; margin: 0 0 8px; }
+  .packband p { color: var(--dim); font-size: 13.5px; margin: 0 0 14px; }
+  .hashrow { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .hash {
+    font-size: 12px;
+    color: var(--green);
+    background: var(--deep);
+    border: 2px solid var(--line);
+    padding: 8px 12px;
+    word-break: break-all;
+  }
+  footer { border-top: 2px solid var(--line); margin-top: 40px; }
+  .foot-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 22px 20px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+    color: var(--dim);
+    font-size: 13px;
+  }
+  .foot-inner .sp { margin-left: auto; display: flex; gap: 10px; }
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .ticker-inner, .hero-art img.main, .ver i, .cursor { animation: none; }
+    html { scroll-behavior: auto; }
+  }
+  @media (max-width: 860px) {
+    .hero { grid-template-columns: 1fr; }
+    .grid3 { grid-template-columns: 1fr; }
+    .navlinks { display: none; }
+    .menubtn { display: inline-flex; }
+    .packband { grid-template-columns: 1fr; }
+    .sec-head p { display: none; }
+  }
 </style>
 </head>
 <body>
-<nav>
-  <img src="assets/logo.png" alt="Vaultspire mark">
-  <b>VAULTSPIRE</b>
-  <a href="#loop">Loop</a>
-  <a href="#gear">Gear seals</a>
-  <a href="#spires">Spires</a>
-  <a href="#commands">Commands</a>
-  <a href="#install">Install</a>
-  <a href="#pack">Pack</a>
+<nav class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="#top">
+      <img src="assets/logo.png" alt="Vaultspire mark">
+      <span>VAULT<em>SPIRE</em></span>
+    </a>
+    <div class="navlinks">
+      <a href="#loop">Loop</a>
+      <a href="#gear">Gear</a>
+      <a href="#spires">Spires</a>
+      <a href="#commands">Commands</a>
+      <a href="#install">Install</a>
+      <a href="#pack">Pack</a>
+    </div>
+    <div class="nav-right">
+      <span class="ver"><i></i>v1.0.2</span>
+      <a class="iconbtn" href="https://github.com/frteddz/Vaultspire" aria-label="GitHub repo">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+      </a>
+      <a class="btn" href="vaultspire-pack.zip">
+        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 24.0083V42H42V24"/><path d="M33 23L24 32L15 23"/><path d="M23.9917 6V32"/></svg>
+        Pack
+      </a>
+      <button class="iconbtn menubtn" id="menubtn" aria-label="Open menu" aria-expanded="false">
+        <svg id="icon-open" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" aria-hidden="true"><path d="M7.94971 11.9497H39.9497"/><path d="M7.94971 23.9497H39.9497"/><path d="M7.94971 35.9497H39.9497"/></svg>
+        <svg id="icon-shut" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" style="display:none" aria-hidden="true"><path d="M8 8L40 40"/><path d="M8 40L40 8"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="mobilemenu" id="mobilemenu">
+    <a href="#loop">Loop</a>
+    <a href="#gear">Gear</a>
+    <a href="#spires">Spires</a>
+    <a href="#commands">Commands</a>
+    <a href="#install">Install</a>
+    <a href="#pack">Pack</a>
+  </div>
 </nav>
-<div class="wrap">
+
+<div class="wrap" id="top">
   <header class="hero">
-    <img class="banner" src="assets/og.png" alt="Vaultspire spire fortress">
-    <img class="logo" src="assets/logo.png" alt="Vaultspire logo">
-    <h1>VAULTSPIRE</h1>
-    <p class="sub">1.0.2 by frteddz. Seal vaults, seal gear, fight over spires. Paper 1.21.11.</p>
-    <div class="btns">
-      <a class="btn gold" href="vaultspire-pack.zip">Download texture pack</a>
-      <a class="btn" href="https://github.com/frteddz/Vaultspire">GitHub repo</a>
+    <div>
+      <span class="kicker">PAPER 1.21.11 / SMP CORE</span>
+      <h1>LOSE SLOTS.<br><span class="accent">NOT HEARTS.</span></h1>
+      <p class="lede">Vaultspire 1.0.2 by frteddz. You start with <b>18 vaults</b>. Kills steal one, any death seals one. Hit zero and you are bankrupt until a spire buys you back.</p>
+      <div class="cta-row">
+        <a class="btn" href="vaultspire-pack.zip">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 24.0083V42H42V24"/><path d="M33 23L24 32L15 23"/><path d="M23.9917 6V32"/></svg>
+          Get the pack
+        </a>
+        <a class="btn ghost" href="#install">Install on server</a>
+      </div>
+      <div class="console"><span class="p">&gt;</span> /spirerandom <span class="cursor"></span></div>
+    </div>
+    <div class="hero-art">
+      <img class="main" src="assets/og.png" alt="Crystal vault spire fortress">
+      <div class="stamp">SEASON READY</div>
     </div>
   </header>
 
-  <section class="card" id="loop">
-    <h2>The loop</h2>
-    <div class="grid">
-      <div class="tile"><img src="assets/chest.png" alt="Vaults"><h3>Vaults</h3><p>Start with 18. Kills steal 1, any death seals 1. Zero means bankrupt and spectator.</p></div>
-      <div class="tile"><img src="assets/sealed.png" alt="Sealed slot"><h3>Sealed slots</h3><p>Locked slots plate over with vault metal. No dupes, no drops, no bypass. Clear or death reseals automatically.</p></div>
-      <div class="tile"><img src="assets/spire.png" alt="Spire"><h3>Spires</h3><p>Scattered lodestone spires. Pay the cost, name the bankrupt player, confirm. They return with 6 vaults.</p></div>
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-inner" id="ticker">
+      <b>18</b> start vaults &nbsp;/&nbsp; <b>36</b> max &nbsp;/&nbsp; <b>0</b> means bankrupt &nbsp;/&nbsp; kills steal <b>1</b> &nbsp;/&nbsp; PvE seals with no payout &nbsp;/&nbsp; spires rest <b>90m</b> &nbsp;/&nbsp; revives return <b>6</b> vaults &nbsp;/&nbsp;
+    </div>
+  </div>
+
+  <section class="block reveal" id="loop">
+    <div class="sec-head"><span class="sec-num">01</span><h2>THE LOOP</h2><p>three rules, whole season</p></div>
+    <div class="grid3">
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="12" width="36" height="30" rx="2"/><path d="M6 13L13 5H35L42 13"/></svg></div>
+        <h3>VAULTS</h3>
+        <p>Inventory slots are the life pool. <b>Stacked players turn clumsy</b>, broke players turn sneaky.</p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="22" width="36" height="22" rx="2"/><path d="M14 22V14C14 8.47715 18.4772 4 24 4C29.5228 4 34 8.47715 34 14V22"/><path d="M24 30V36"/></svg></div>
+        <h3>SEALS</h3>
+        <p>Locked slots plate over. <b>No dupes, no drops, no bypass.</b> Death and /clear reseal on their own.</p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 44L22.6875 15.5"/><path d="M36 44L25.3125 15.5"/><circle cx="24" cy="12" r="4"/><path d="M37.57 33C33.6618 35.5307 29.0024 37 23.9998 37C18.9973 37 14.3379 35.5307 10.4297 33"/></svg></div>
+        <h3>SPIRES</h3>
+        <p>Hidden lodestone spires sell <b>buyouts</b>. Pay up, name the broke player, confirm.</p>
+      </div>
     </div>
   </section>
 
-  <section class="card" id="gear">
-    <h2>Gear seals</h2>
-    <p class="sub">Drop low and armor seals at random. Thresholds live in config under gear-seals.</p>
-    <div class="gear-row">
+  <section class="block reveal" id="gear">
+    <div class="sec-head"><span class="sec-num">02</span><h2>GEAR SEALS</h2><p>thresholds in config</p></div>
+    <div class="gearstrip">
       <img src="assets/gear_helmet.png" alt="Sealed helmet">
       <img src="assets/gear_chest.png" alt="Sealed chestplate">
       <img src="assets/gear_legs.png" alt="Sealed leggings">
       <img src="assets/gear_boots.png" alt="Sealed boots">
       <img src="assets/gear_offhand.png" alt="Sealed offhand">
-    </div>
-  </section>
-
-  <section class="card" id="spires">
-    <h2>Buyouts</h2>
-    <img class="wide" src="assets/buyout_scene.png" alt="Buyout at a spire">
-    <div class="grid">
-      <div class="tile"><img src="assets/buyout.png" alt="Cheap spire"><h3>Cheap spires</h3><p>16 diamonds plus 6 echo shards. Hard guard, 3 waves.</p></div>
-      <div class="tile"><img src="assets/star.png" alt="Pricey spire"><h3>Pricey spires</h3><p>Totem plus netherite plus 16 echo shards. Easy guard, 1 wave.</p></div>
-      <div class="tile"><img src="assets/mapicon.png" alt="Spire map"><h3>Find them</h3><p>/spiremap marks spires within 1000 blocks on real terrain. Each spire rests 90 minutes after a buyout.</p></div>
-    </div>
-  </section>
-
-  <section class="card" id="commands">
-    <h2>Commands</h2>
-    <table class="cmds">
-      <tr><td>/vault</td><td>Your open vaults and sealed gear.</td></tr>
-      <tr><td>/vaultgui</td><td>Full menu. Status, spires, map, pack, help, credits, admin tools.</td></tr>
-      <tr><td>/vault help</td><td>Every command, admin ones too if you are op.</td></tr>
-      <tr><td>/vault credits</td><td>Author, version, art notes.</td></tr>
-      <tr><td>/vault pack</td><td>Texture pack install help in game.</td></tr>
-      <tr><td>/spiremap</td><td>Map to nearby spires. 20s cooldown.</td></tr>
-      <tr><td>/spirerandom</td><td>Scatter menu for ops. Amount plus per biome presets.</td></tr>
-      <tr><td>/spirerandom 5 1</td><td>Scatter direct. 5 spires, 1 per split biome.</td></tr>
-      <tr><td>/vault set / add</td><td>Admin vault edits. Logged to console.</td></tr>
-      <tr><td>/vault spire add</td><td>Admin manual spire where you stand. Cheap or pricey.</td></tr>
-    </table>
-  </section>
-
-  <section class="card" id="install">
-    <h2>Server install</h2>
-    <pre>1. Drop vaultspire-1.0.2.jar into plugins, restart.
-2. As op run /spirerandom, hit Quick 5x1.
-3. server.properties:
-   resource-pack=https://frteddz.github.io/Vaultspire/vaultspire-pack.zip
-   resource-pack-sha1=67ef259577522e0c8334b4d2afb6d06b01749a37
-4. Restart, join, accept the pack.</pre>
-  </section>
-
-  <section class="card" id="pack">
-    <h2>Texture pack 1.0.2</h2>
-    <div class="packrow">
-      <img src="assets/logo.png" alt="Pack logo">
       <div>
-        <p class="sub">PixelLab art. Seal plating model 9001, spire 9002, map 9004, book 9006, star 9007, buyout beacon 9012. Built for the 1.21 item definition format with legacy fallback.</p>
-        <div class="btns">
-          <a class="btn gold" href="vaultspire-pack.zip">vaultspire-pack.zip</a>
-          <a class="btn" id="copyhash" data-sha="67ef259577522e0c8334b4d2afb6d06b01749a37">Copy sha1</a>
-        </div>
+        <h3>RANDOM PICK, EVERY TIME</h3>
+        <p>At 12, 9, 6, 3 and 1 vaults left, one more slot seals at random from helmet, chest, legs, boots, offhand. The piece pops off. Climb back up and seals open in reverse. Cheap revives come back missing gear.</p>
       </div>
     </div>
   </section>
 
-  <footer>Vaultspire 1.0.2. MIT License. By <a href="https://frteddz.github.io">frteddz</a>. Art via PixelLab API.</footer>
+  <section class="block reveal" id="spires">
+    <div class="sec-head"><span class="sec-num">03</span><h2>BUYOUTS</h2><p>cheap hits hard, pricey coasts</p></div>
+    <figure class="shot" style="margin:0">
+      <img src="assets/buyout_scene.png" alt="Buyout trade at a crystal spire">
+      <figcaption>Cheap: 16 diamonds + 6 echo shards, 3 guard waves. Pricey: totem + netherite + 16 echo shards, 1 wave. Every spire rests 90 minutes.</figcaption>
+    </figure>
+  </section>
+
+  <section class="block reveal" id="commands">
+    <div class="sec-head"><span class="sec-num">04</span><h2>COMMANDS</h2><p>tab completes everything</p></div>
+    <table class="cmds">
+      <tr><td>/vault</td><td>Your open vaults and sealed gear.</td></tr>
+      <tr><td>/vaultgui</td><td>Full menu. Status, spires, map, pack, admin tools.</td></tr>
+      <tr><td>/vault help</td><td>Every command, admin ones too if you are op.</td></tr>
+      <tr><td>/vault credits</td><td>Author, version, art notes.</td></tr>
+      <tr><td>/vault pack</td><td>Pack install help, in game.</td></tr>
+      <tr><td>/spiremap</td><td>Map to spires within 1000 blocks. 20s cooldown.</td></tr>
+      <tr><td>/spirerandom</td><td>Scatter menu for ops. Amount plus per-biome presets.</td></tr>
+      <tr><td>/spirerandom 5 1</td><td>Scatter direct. 5 spires, 1 per split biome.</td></tr>
+      <tr><td>/vault set / add</td><td>Admin vault edits. Logged to console.</td></tr>
+      <tr><td>/vault spire add</td><td>Admin manual spire where you stand, cheap or pricey.</td></tr>
+    </table>
+  </section>
+
+  <section class="block reveal" id="install">
+    <div class="sec-head"><span class="sec-num">05</span><h2>INSTALL</h2><p>four moves</p></div>
+    <ol class="steps">
+      <li>Drop <code>vaultspire-1.0.2.jar</code> into plugins and restart. Player data migrates to playerdata.yml by itself.</li>
+      <li>As op run <code>/spirerandom</code>, open the scatter GUI, hit Quick 5x1. Check with <code>/spiremap</code>.</li>
+      <li>Set the resource pack lines in server.properties to the URL and sha1 below.</li>
+      <li>Restart, join, accept the pack. Open <code>/vaultgui</code>. Seals should wear the vault plating.</li>
+    </ol>
+    <pre class="snippet">resource-pack=https://frteddz.github.io/Vaultspire/vaultspire-pack.zip
+resource-pack-sha1=67ef259577522e0c8334b4d2afb6d06b01749a37</pre>
+  </section>
+
+  <section class="block reveal" id="pack">
+    <div class="sec-head"><span class="sec-num">06</span><h2>PACK 1.0.2</h2><p>PixelLab art, 1.21 definitions</p></div>
+    <div class="packband">
+      <img src="assets/logo.png" alt="Vaultspire logo">
+      <div>
+        <h3>VAULTSPIRE-PACK.ZIP</h3>
+        <p>Seal plating 9001, spire 9002, map 9004, book 9006, star 9007, buyout beacon 9012. Gear lock icons ship for the next pass.</p>
+        <div class="hashrow">
+          <a class="btn" href="vaultspire-pack.zip">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 24.0083V42H42V24"/><path d="M33 23L24 32L15 23"/><path d="M23.9917 6V32"/></svg>
+            Download
+          </a>
+          <button class="btn ghost" id="copyhash" data-sha="67ef259577522e0c8334b4d2afb6d06b01749a37">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 12.4316V7.8125C13 6.2592 14.2592 5 15.8125 5H40.1875C41.7408 5 43 6.2592 43 7.8125V32.1875C43 33.7408 41.7408 35 40.1875 35H35.5163"/><path d="M32.1875 13H7.8125C6.2592 13 5 14.2592 5 15.8125V40.1875C5 41.7408 6.2592 43 7.8125 43H32.1875C33.7408 43 35 41.7408 35 40.1875V15.8125C35 14.2592 33.7408 13 32.1875 13Z"/></svg>
+            <span id="copylabel">Copy sha1</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
 </div>
+
+<footer>
+  <div class="foot-inner">
+    <span>Vaultspire 1.0.2 / MIT / by <a href="https://frteddz.github.io">frteddz</a></span>
+    <span>Display font: Boxel / Art: PixelLab API</span>
+    <span class="sp">
+      <a class="iconbtn" href="https://github.com/frteddz/Vaultspire" aria-label="GitHub">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+      </a>
+    </span>
+  </div>
+</footer>
+
 <script>
-document.getElementById("copyhash").addEventListener("click", function (ev) {
-  ev.preventDefault();
-  var sha = ev.currentTarget.getAttribute("data-sha");
-  if (navigator.clipboard) {
-    navigator.clipboard.writeText(sha);
+(function () {
+  var menu = document.getElementById("mobilemenu");
+  var btn = document.getElementById("menubtn");
+  var open = document.getElementById("icon-open");
+  var shut = document.getElementById("icon-shut");
+  function setMenu(state) {
+    menu.classList.toggle("open", state);
+    open.style.display = state ? "none" : "";
+    shut.style.display = state ? "" : "none";
+    btn.setAttribute("aria-expanded", state ? "true" : "false");
   }
-  ev.currentTarget.textContent = "Copied";
-});
+  btn.addEventListener("click", function () {
+    setMenu(!menu.classList.contains("open"));
+  });
+  var links = menu.querySelectorAll("a");
+  for (var i = 0; i < links.length; i++) {
+    links[i].addEventListener("click", function () { setMenu(false); });
+  }
+  var tick = document.getElementById("ticker");
+  tick.innerHTML = tick.innerHTML + tick.innerHTML;
+  var copy = document.getElementById("copyhash");
+  copy.addEventListener("click", function () {
+    var sha = copy.getAttribute("data-sha");
+    function done() {
+      document.getElementById("copylabel").textContent = "Copied";
+      window.setTimeout(function () {
+        document.getElementById("copylabel").textContent = "Copy sha1";
+      }, 1600);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(sha).then(done, done);
+    } else {
+      done();
+    }
+  });
+  var io = new IntersectionObserver(function (entries) {
+    for (var j = 0; j < entries.length; j++) {
+      if (entries[j].isIntersecting) {
+        entries[j].target.classList.add("in");
+        io.unobserve(entries[j].target);
+      }
+    }
+  }, { threshold: 0.12 });
+  var rev = document.querySelectorAll(".reveal");
+  for (var k = 0; k < rev.length; k++) {
+    io.observe(rev[k]);
+  }
+})();
 </script>
 </body>
 </html>
