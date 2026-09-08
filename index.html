@@ -65,15 +65,15 @@
   .mobilemenu.open { display: block; }
   .mobilemenu a { display: block; color: var(--dim); text-decoration: none; padding: 10px 4px; border-bottom: 1px solid var(--line); }
   .mobilemenu a:hover { color: var(--gold); }
-  .hero { position: relative; border-bottom: 2px solid var(--line); background: #100f2c url("assets/og.png") center 30% / cover no-repeat; image-rendering: pixelated; }
-  .hero-scrim { background: linear-gradient(to top, rgba(16, 15, 44, 0.96) 8%, rgba(16, 15, 44, 0.55) 45%, rgba(16, 15, 44, 0.25) 100%); }
-  .hero-inner { max-width: 1200px; margin: 0 auto; padding: 150px 28px 70px; }
+  .hero { position: relative; border-bottom: 2px solid var(--line); background: #100f2c url("assets/og.png") center 30% / cover no-repeat; image-rendering: pixelated; min-height: 92vh; display: flex; }
+  .hero-scrim { background: linear-gradient(to top, rgba(16, 15, 44, 0.96) 8%, rgba(16, 15, 44, 0.5) 50%, rgba(16, 15, 44, 0.3) 100%); flex: 1; display: flex; }
+  .hero-inner { max-width: 1200px; margin: auto; padding: 110px 28px 70px; text-align: center; }
   .kicker { display: inline-block; font-family: var(--display); font-size: 12px; letter-spacing: 2px; color: var(--gold); border: 2px solid var(--gold-deep); background: rgba(16, 15, 44, 0.85); padding: 6px 12px; margin-bottom: 20px; }
-  h1 { font-family: var(--display); font-size: clamp(42px, 7vw, 76px); line-height: 1.02; letter-spacing: 3px; margin: 0 0 16px; color: var(--text); text-shadow: 4px 4px 0 #100f2c; }
+  h1 { font-family: var(--display); font-size: clamp(44px, 7vw, 80px); line-height: 1.02; letter-spacing: 3px; margin: 0 0 16px; color: var(--text); text-shadow: 4px 4px 0 #100f2c; }
   h1 .accent { color: var(--gold); }
-  .lede { color: #d9d1f2; max-width: 56ch; margin: 0 0 26px; text-shadow: 2px 2px 0 #100f2c; font-size: 16px; }
+  .lede { color: #cfc8ea; max-width: 52ch; margin: 0 auto 28px; text-shadow: 2px 2px 0 #100f2c; font-size: 16px; }
   .lede b { color: var(--gold); font-weight: normal; }
-  .cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
+  .cta-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
   .wrap { max-width: 1200px; margin: 0 auto; padding: 0 28px 60px; }
   section.block { padding: 56px 0 8px; }
   .sec-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 26px; }
@@ -161,15 +161,14 @@
 <header class="hero">
   <div class="hero-scrim">
     <div class="hero-inner">
-      <span class="kicker">PAPER 1.21.11 / SMP CORE / VANILLA TEXTURES</span>
+      <span class="kicker">PAPER 1.21.11 / SMP CORE</span>
       <h1>LOSE SLOTS.<br><span class="accent">NOT HEARTS.</span></h1>
-      <p class="lede">Vaultspire 1.0.3 by frteddz. You start with <b>18 vaults</b>. Kills steal one, any death seals one. Hit zero and you are bankrupt until a spire buys you back.</p>
+      <p class="lede">An SMP core where inventory slots are lives. Steal them, seal them, buy them back.</p>
       <div class="cta-row">
         <a class="btn" href="downloads.html">
           <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 24.0083V42H42V24"/><path d="M33 23L24 32L15 23"/><path d="M23.9917 6V32"/></svg>
           Download 1.0.3
         </a>
-        <a class="btn ghost" href="#install">Install on server</a>
       </div>
     </div>
   </div>
