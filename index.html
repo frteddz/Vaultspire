@@ -76,10 +76,6 @@
   .lede b { color: var(--gold); font-weight: normal; }
   .cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
   .wrap { max-width: 1200px; margin: 0 auto; padding: 0 28px 60px; }
-  .ticker { margin: 34px 0 8px; border-top: 2px solid var(--line); border-bottom: 2px solid var(--line); overflow: hidden; background: var(--deep); }
-  .ticker-inner { display: inline-block; white-space: nowrap; padding: 10px 0; font-size: 13px; color: var(--dim); animation: tick 30s linear infinite; }
-  .ticker-inner b { color: var(--gold); font-weight: normal; }
-  @keyframes tick { from { transform: translateX(0); } to { transform: translateX(-50%); } }
   section.block { padding: 56px 0 8px; }
   .sec-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 26px; }
   .sec-num { font-family: var(--display); font-size: 13px; color: #2a1f08; background: var(--gold); padding: 4px 10px; }
@@ -114,7 +110,7 @@
   .reveal.in { opacity: 1; transform: none; }
   @media (prefers-reduced-motion: reduce) {
     .reveal { opacity: 1; transform: none; transition: none; }
-    .ticker-inner, .ver i { animation: none; }
+    .ver i { animation: none; }
     html { scroll-behavior: auto; }
   }
   @media (max-width: 860px) {
@@ -182,12 +178,6 @@
 </header>
 
 <div class="wrap">
-  <div class="ticker" aria-hidden="true">
-    <div class="ticker-inner" id="ticker">
-      <b>18</b> start vaults &nbsp;/&nbsp; <b>36</b> max &nbsp;/&nbsp; <b>0</b> means bankrupt &nbsp;/&nbsp; kills steal <b>1</b> &nbsp;/&nbsp; PvE seals with no payout &nbsp;/&nbsp; spires rest <b>90m</b> &nbsp;/&nbsp; revives return <b>6</b> vaults &nbsp;/&nbsp;
-    </div>
-  </div>
-
   <section class="block reveal" id="loop">
     <div class="sec-head"><span class="sec-num">01</span><h2>THE LOOP</h2></div>
     <div class="grid3">
@@ -282,8 +272,6 @@
   for (var i = 0; i < links.length; i++) {
     links[i].addEventListener("click", function () { setMenu(false); });
   }
-  var tick = document.getElementById("ticker");
-  tick.innerHTML = tick.innerHTML + tick.innerHTML;
   var io = new IntersectionObserver(function (entries) {
     for (var j = 0; j < entries.length; j++) {
       if (entries[j].isIntersecting) {
