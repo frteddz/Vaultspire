@@ -3,78 +3,159 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Vaultspire SMP Plugin</title>
-<meta name="description" content="Vaultspire 1.0.1 by frteddz. Seal vaults, seal gear, fight over spires. Paper 1.21.11.">
+<title>Vaultspire SMP Plugin 1.0.2</title>
+<meta name="description" content="Vaultspire 1.0.2 by frteddz. Seal vaults, seal gear, fight over spires. Paper 1.21.11.">
+<meta property="og:title" content="Vaultspire SMP Plugin">
+<meta property="og:description" content="Seal vaults, seal gear, fight over spires. Paper 1.21.11.">
+<meta property="og:image" content="assets/og.png">
 <link rel="icon" href="assets/logo.png">
 <style>
-  :root { --bg: #14101f; --panel: #1e1633; --gold: #e8b64c; --purple: #9b5cf0; --cyan: #57e6d9; --text: #efe9ff; --dim: #a79fd1; }
+  :root { --bg: #14101f; --panel: #1e1633; --deep: #120d20; --gold: #e8b64c; --purple: #9b5cf0; --cyan: #57e6d9; --text: #efe9ff; --dim: #a79fd1; }
   * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
   body { margin: 0; background: var(--bg); color: var(--text); font-family: "Courier New", monospace; }
-  .wrap { max-width: 960px; margin: 0 auto; padding: 24px; }
-  header.hero { text-align: center; padding: 32px 16px; }
-  header.hero img.banner { width: 100%; max-height: 260px; object-fit: cover; image-rendering: pixelated; border: 4px solid var(--gold); }
+  nav { position: sticky; top: 0; background: #0c0916; border-bottom: 3px solid var(--purple); padding: 10px 24px; display: flex; gap: 18px; align-items: center; z-index: 10; }
+  nav img { width: 32px; height: 32px; image-rendering: pixelated; }
+  nav b { color: var(--gold); letter-spacing: 2px; }
+  nav a { color: var(--dim); text-decoration: none; }
+  nav a:hover { color: var(--cyan); }
+  .wrap { max-width: 1020px; margin: 0 auto; padding: 24px; }
+  header.hero { text-align: center; padding: 24px 16px 8px; }
+  header.hero img.banner { width: 100%; max-height: 300px; object-fit: cover; image-rendering: pixelated; border: 4px solid var(--gold); }
   .logo { width: 128px; height: 128px; image-rendering: pixelated; margin-top: -64px; border: 4px solid var(--purple); background: var(--panel); }
-  h1 { color: var(--gold); letter-spacing: 2px; margin: 12px 0 4px; }
+  h1 { color: var(--gold); letter-spacing: 3px; margin: 12px 0 4px; font-size: 2.2em; }
   .sub { color: var(--dim); margin: 0 0 16px; }
-  .btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin: 16px 0; }
-  a.btn { display: inline-block; padding: 12px 20px; background: var(--purple); color: #fff; text-decoration: none; border: 3px solid var(--gold); }
+  .btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin: 16px 0 8px; }
+  a.btn { display: inline-block; padding: 12px 20px; background: var(--purple); color: #fff; text-decoration: none; border: 3px solid var(--gold); cursor: pointer; }
   a.btn.gold { background: var(--gold); color: #221a08; }
   section.card { background: var(--panel); border: 3px solid var(--purple); padding: 20px; margin: 20px 0; }
-  section.card h2 { color: var(--cyan); margin-top: 0; }
+  section.card h2 { color: var(--cyan); margin-top: 0; letter-spacing: 1px; }
+  section.card img.wide { width: 100%; image-rendering: pixelated; border: 3px solid var(--gold); margin-bottom: 12px; }
   .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
-  .tile { background: #120d20; border: 2px solid var(--gold); padding: 12px; text-align: center; }
+  .tile { background: var(--deep); border: 2px solid var(--gold); padding: 12px; text-align: center; }
   .tile img { width: 64px; height: 64px; image-rendering: pixelated; }
-  code, pre { background: #0c0916; color: var(--cyan); padding: 2px 6px; }
-  pre { padding: 12px; overflow-x: auto; line-height: 1.6; }
+  .tile h3 { color: var(--gold); margin: 8px 0 4px; font-size: 1em; }
+  .tile p { color: var(--dim); font-size: 0.9em; margin: 0; }
+  .gear-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 12px 0; }
+  .gear-row img { width: 64px; height: 64px; image-rendering: pixelated; border: 2px solid var(--purple); background: var(--deep); }
+  table.cmds { width: 100%; border-collapse: collapse; }
+  table.cmds td { border: 2px solid var(--purple); padding: 8px 10px; vertical-align: top; }
+  table.cmds td:first-child { color: var(--gold); white-space: nowrap; }
+  table.cmds td:last-child { color: var(--dim); }
+  code, pre { background: #0c0916; color: var(--cyan); }
+  code { padding: 2px 6px; }
+  pre { padding: 12px; overflow-x: auto; line-height: 1.7; }
+  .packrow { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+  .packrow img { width: 96px; height: 96px; image-rendering: pixelated; border: 3px solid var(--gold); }
   footer { text-align: center; color: var(--dim); padding: 24px; }
   footer a { color: var(--gold); }
 </style>
 </head>
 <body>
+<nav>
+  <img src="assets/logo.png" alt="Vaultspire mark">
+  <b>VAULTSPIRE</b>
+  <a href="#loop">Loop</a>
+  <a href="#gear">Gear seals</a>
+  <a href="#spires">Spires</a>
+  <a href="#commands">Commands</a>
+  <a href="#install">Install</a>
+  <a href="#pack">Pack</a>
+</nav>
 <div class="wrap">
   <header class="hero">
-    <img class="banner" src="assets/hero.png" alt="Vaultspire spire landscape">
+    <img class="banner" src="assets/og.png" alt="Vaultspire spire fortress">
     <img class="logo" src="assets/logo.png" alt="Vaultspire logo">
     <h1>VAULTSPIRE</h1>
-    <p class="sub">1.0.1 by frteddz. Seal vaults, seal gear, fight over spires. Paper 1.21.11.</p>
+    <p class="sub">1.0.2 by frteddz. Seal vaults, seal gear, fight over spires. Paper 1.21.11.</p>
     <div class="btns">
       <a class="btn gold" href="vaultspire-pack.zip">Download texture pack</a>
-      <a class="btn" href="https://frteddz.github.io">frteddz.github.io</a>
+      <a class="btn" href="https://github.com/frteddz/Vaultspire">GitHub repo</a>
     </div>
   </header>
 
-  <section class="card">
+  <section class="card" id="loop">
     <h2>The loop</h2>
     <div class="grid">
-      <div class="tile"><img src="assets/chest.png" alt="Vaults"><p>Start with 18 vaults. Kills steal 1, any death seals 1. Zero means bankrupt.</p></div>
-      <div class="tile"><img src="assets/sealed.png" alt="Sealed slot"><p>Sealed slots lock with vault plating. Low vaults also seal armor and offhand at random.</p></div>
-      <div class="tile"><img src="assets/spire.png" alt="Spire"><p>Find a spire, pay the cost, name the bankrupt player. They return with 6 vaults.</p></div>
+      <div class="tile"><img src="assets/chest.png" alt="Vaults"><h3>Vaults</h3><p>Start with 18. Kills steal 1, any death seals 1. Zero means bankrupt and spectator.</p></div>
+      <div class="tile"><img src="assets/sealed.png" alt="Sealed slot"><h3>Sealed slots</h3><p>Locked slots plate over with vault metal. No dupes, no drops, no bypass. Clear or death reseals automatically.</p></div>
+      <div class="tile"><img src="assets/spire.png" alt="Spire"><h3>Spires</h3><p>Scattered lodestone spires. Pay the cost, name the bankrupt player, confirm. They return with 6 vaults.</p></div>
     </div>
   </section>
 
-  <section class="card">
-    <h2>Commands</h2>
-    <pre>/vault          your vaults
-/vaultgui       full menu
-/vault help     all commands
-/vault credits  author and pack
-/vault pack     pack install help
-/spiremap       map to spires near you
-/spirerandom    scatter menu (admin)</pre>
+  <section class="card" id="gear">
+    <h2>Gear seals</h2>
+    <p class="sub">Drop low and armor seals at random. Thresholds live in config under gear-seals.</p>
+    <div class="gear-row">
+      <img src="assets/gear_helmet.png" alt="Sealed helmet">
+      <img src="assets/gear_chest.png" alt="Sealed chestplate">
+      <img src="assets/gear_legs.png" alt="Sealed leggings">
+      <img src="assets/gear_boots.png" alt="Sealed boots">
+      <img src="assets/gear_offhand.png" alt="Sealed offhand">
+    </div>
   </section>
 
-  <section class="card">
+  <section class="card" id="spires">
+    <h2>Buyouts</h2>
+    <img class="wide" src="assets/buyout_scene.png" alt="Buyout at a spire">
+    <div class="grid">
+      <div class="tile"><img src="assets/buyout.png" alt="Cheap spire"><h3>Cheap spires</h3><p>16 diamonds plus 6 echo shards. Hard guard, 3 waves.</p></div>
+      <div class="tile"><img src="assets/star.png" alt="Pricey spire"><h3>Pricey spires</h3><p>Totem plus netherite plus 16 echo shards. Easy guard, 1 wave.</p></div>
+      <div class="tile"><img src="assets/mapicon.png" alt="Spire map"><h3>Find them</h3><p>/spiremap marks spires within 1000 blocks on real terrain. Each spire rests 90 minutes after a buyout.</p></div>
+    </div>
+  </section>
+
+  <section class="card" id="commands">
+    <h2>Commands</h2>
+    <table class="cmds">
+      <tr><td>/vault</td><td>Your open vaults and sealed gear.</td></tr>
+      <tr><td>/vaultgui</td><td>Full menu. Status, spires, map, pack, help, credits, admin tools.</td></tr>
+      <tr><td>/vault help</td><td>Every command, admin ones too if you are op.</td></tr>
+      <tr><td>/vault credits</td><td>Author, version, art notes.</td></tr>
+      <tr><td>/vault pack</td><td>Texture pack install help in game.</td></tr>
+      <tr><td>/spiremap</td><td>Map to nearby spires. 20s cooldown.</td></tr>
+      <tr><td>/spirerandom</td><td>Scatter menu for ops. Amount plus per biome presets.</td></tr>
+      <tr><td>/spirerandom 5 1</td><td>Scatter direct. 5 spires, 1 per split biome.</td></tr>
+      <tr><td>/vault set / add</td><td>Admin vault edits. Logged to console.</td></tr>
+      <tr><td>/vault spire add</td><td>Admin manual spire where you stand. Cheap or pricey.</td></tr>
+    </table>
+  </section>
+
+  <section class="card" id="install">
     <h2>Server install</h2>
-    <pre>1. Drop vaultspire-1.0.1.jar into plugins, restart.
-2. Run /spirerandom from the GUI as op.
+    <pre>1. Drop vaultspire-1.0.2.jar into plugins, restart.
+2. As op run /spirerandom, hit Quick 5x1.
 3. server.properties:
    resource-pack=https://frteddz.github.io/Vaultspire/vaultspire-pack.zip
-   resource-pack-sha1=50c7e072d77b3baad5b3c00a788680a679b2d6df
+   resource-pack-sha1=67ef259577522e0c8334b4d2afb6d06b01749a37
 4. Restart, join, accept the pack.</pre>
-    <p class="sub">Pack art made with the PixelLab API. Seal panes use model 9001.</p>
   </section>
 
-  <footer>Vaultspire 1.0.1. MIT License. By <a href="https://frteddz.github.io">frteddz</a>.</footer>
+  <section class="card" id="pack">
+    <h2>Texture pack 1.0.2</h2>
+    <div class="packrow">
+      <img src="assets/logo.png" alt="Pack logo">
+      <div>
+        <p class="sub">PixelLab art. Seal plating model 9001, spire 9002, map 9004, book 9006, star 9007, buyout beacon 9012. Built for the 1.21 item definition format with legacy fallback.</p>
+        <div class="btns">
+          <a class="btn gold" href="vaultspire-pack.zip">vaultspire-pack.zip</a>
+          <a class="btn" id="copyhash" data-sha="67ef259577522e0c8334b4d2afb6d06b01749a37">Copy sha1</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>Vaultspire 1.0.2. MIT License. By <a href="https://frteddz.github.io">frteddz</a>. Art via PixelLab API.</footer>
 </div>
+<script>
+document.getElementById("copyhash").addEventListener("click", function (ev) {
+  ev.preventDefault();
+  var sha = ev.currentTarget.getAttribute("data-sha");
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(sha);
+  }
+  ev.currentTarget.textContent = "Copied";
+});
+</script>
 </body>
 </html>
