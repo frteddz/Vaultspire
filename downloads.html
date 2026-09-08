@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Download Vaultspire 1.0.3</title>
+<meta name="description" content="Download Vaultspire 1.0.3 for Paper, Purpur or Spigot on Minecraft 1.21.11.">
+<link rel="icon" href="assets/logo.png">
+<style>
+  @font-face {
+    font-family: "Boxel";
+    src: url("assets/Fonts/Boxel_v0.1/Boxel_v0.1_beta.ttf") format("truetype");
+    font-display: swap;
+  }
+  :root {
+    --night: #16153a;
+    --panel: #23215a;
+    --deep: #100f2c;
+    --line: #4f3881;
+    --gold: #f9e198;
+    --gold-deep: #c99b4a;
+    --ember: #f59388;
+    --rose: #9e5c97;
+    --text: #f2ecff;
+    --dim: #b3a8d6;
+    --display: "Boxel", "Courier New", monospace;
+    --body: ui-monospace, "Cascadia Mono", "Courier New", monospace;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--night); color: var(--text); font-family: var(--body); font-size: 15px; line-height: 1.7; }
+  a { color: var(--gold); }
+  .topbar { position: sticky; top: 0; z-index: 50; background: #100f2c; border-bottom: 2px solid var(--line); }
+  .topbar-inner { max-width: 1200px; margin: 0 auto; padding: 0 28px; height: 64px; display: flex; align-items: center; gap: 22px; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); }
+  .brand img { width: 30px; height: 30px; image-rendering: pixelated; }
+  .brand span { font-family: var(--display); font-size: 17px; letter-spacing: 2px; color: var(--text); }
+  .brand span em { font-style: normal; color: var(--gold); }
+  .navlinks { display: flex; gap: 4px; margin-left: 8px; }
+  .navlinks a { color: var(--dim); text-decoration: none; font-size: 13px; padding: 8px 12px; border: 2px solid transparent; }
+  .navlinks a:hover { color: var(--gold); border-color: var(--line); background: var(--panel); }
+  .nav-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+  .ver { font-family: var(--display); font-size: 12px; color: var(--gold); border: 2px solid var(--line); padding: 5px 10px; background: var(--deep); white-space: nowrap; }
+  .ver i { display: inline-block; width: 7px; height: 7px; background: var(--ember); margin-right: 7px; animation: blink 1.6s steps(2) infinite; }
+  @keyframes blink { 50% { opacity: 0.25; } }
+  .iconbtn { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; border: 2px solid var(--line); background: var(--panel); color: var(--dim); }
+  .iconbtn:hover { color: var(--gold); border-color: var(--gold-deep); }
+  .iconbtn svg { width: 20px; height: 20px; }
+  .btn { display: inline-flex; align-items: center; gap: 9px; font-family: var(--display); font-size: 13px; letter-spacing: 1px; padding: 12px 22px; background: var(--gold); color: #2a1f08; text-decoration: none; border: 2px solid var(--gold); box-shadow: 4px 4px 0 #000; cursor: pointer; }
+  .btn:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 #000; }
+  .btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 #000; }
+  .btn.off { background: transparent; color: var(--dim); border-color: var(--line); box-shadow: none; cursor: not-allowed; }
+  .btn svg { width: 17px; height: 17px; }
+  .menubtn { display: none; }
+  .mobilemenu { display: none; border-top: 2px solid var(--line); padding: 8px 20px 14px; background: #100f2c; }
+  .mobilemenu.open { display: block; }
+  .mobilemenu a { display: block; color: var(--dim); text-decoration: none; padding: 10px 4px; border-bottom: 1px solid var(--line); }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 60px 28px; }
+  h1 { font-family: var(--display); font-size: clamp(30px, 5vw, 48px); letter-spacing: 3px; margin: 0 0 10px; }
+  h1 .accent { color: var(--gold); }
+  .lede { color: var(--dim); max-width: 60ch; margin: 0 0 34px; }
+  .pickers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
+  .field label { display: block; font-family: var(--display); font-size: 12px; letter-spacing: 2px; color: var(--gold); margin-bottom: 8px; }
+  .field select {
+    width: 100%;
+    background: var(--panel);
+    color: var(--text);
+    border: 2px solid var(--line);
+    padding: 12px 14px;
+    font-family: var(--body);
+    font-size: 14px;
+  }
+  .field select:focus { outline: none; border-color: var(--gold-deep); }
+  .filecard { background: var(--panel); border: 2px solid var(--line); border-top: 4px solid var(--gold-deep); padding: 26px; display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
+  .filecard img { width: 72px; height: 72px; image-rendering: pixelated; border: 2px solid var(--line); }
+  .filecard h2 { font-family: var(--display); font-size: 18px; letter-spacing: 1px; margin: 0 0 6px; }
+  .filecard p { color: var(--dim); font-size: 13.5px; margin: 0; }
+  .filecard .grow { flex: 1; min-width: 240px; }
+  .note { margin-top: 18px; background: var(--deep); border: 2px solid var(--line); padding: 14px 18px; color: var(--dim); font-size: 13.5px; }
+  .note b { color: var(--gold); font-weight: normal; }
+  footer { border-top: 2px solid var(--line); margin-top: 60px; background: #100f2c; }
+  .foot-inner { max-width: 1200px; margin: 0 auto; padding: 26px 28px; display: flex; gap: 18px; align-items: center; flex-wrap: wrap; color: var(--dim); font-size: 13px; }
+  .foot-inner nav { display: flex; gap: 16px; }
+  .foot-inner .sp { margin-left: auto; display: flex; gap: 10px; }
+  @media (max-width: 860px) {
+    .pickers { grid-template-columns: 1fr; }
+    .navlinks { display: none; }
+    .menubtn { display: inline-flex; }
+  }
+</style>
+</head>
+<body>
+<nav class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <img src="assets/logo.png" alt="Vaultspire mark">
+      <span>VAULT<em>SPIRE</em></span>
+    </a>
+    <div class="navlinks">
+      <a href="index.html#loop">Loop</a>
+      <a href="index.html#spires">Spires</a>
+      <a href="index.html#commands">Commands</a>
+      <a href="downloads.html">Download</a>
+      <a href="changelog.html">Changelog</a>
+    </div>
+    <div class="nav-right">
+      <span class="ver"><i></i>v1.0.3</span>
+      <a class="iconbtn" href="https://github.com/frteddz/Vaultspire" aria-label="GitHub repo">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+      </a>
+      <button class="iconbtn menubtn" id="menubtn" aria-label="Open menu" aria-expanded="false">
+        <svg id="icon-open" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" aria-hidden="true"><path d="M7.94971 11.9497H39.9497"/><path d="M7.94971 23.9497H39.9497"/><path d="M7.94971 35.9497H39.9497"/></svg>
+        <svg id="icon-shut" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" style="display:none" aria-hidden="true"><path d="M8 8L40 40"/><path d="M8 40L40 8"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="mobilemenu" id="mobilemenu">
+    <a href="index.html#loop">Loop</a>
+    <a href="index.html#spires">Spires</a>
+    <a href="index.html#commands">Commands</a>
+    <a href="downloads.html">Download</a>
+    <a href="changelog.html">Changelog</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <h1>DOWN<span class="accent">LOAD</span></h1>
+  <p class="lede">Pick your game version, loader, and release. Only stable releases carry files. Anything marked dev testing stays off the shelf.</p>
+
+  <div class="pickers">
+    <div class="field">
+      <label for="game">GAME VERSION</label>
+      <select id="game">
+        <option value="1.21.11" selected>1.21.11</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="loader">LOADER</label>
+      <select id="loader">
+        <option value="paper" selected>Paper</option>
+        <option value="purpur">Purpur</option>
+        <option value="spigot">Spigot</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="release">RELEASE</label>
+      <select id="release">
+        <option value="1.0.3" selected>1.0.3 stable</option>
+        <option value="1.0.2">1.0.2 dev testing only</option>
+        <option value="1.0.1">1.0.1 dev testing only</option>
+        <option value="1.0.0">1.0.0 dev testing only</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="filecard">
+    <img src="assets/logo.png" alt="Vaultspire logo">
+    <div class="grow">
+      <h2 id="filename">vaultspire-1.0.3.jar</h2>
+      <p id="filemeta">Paper 1.21.11 / 62 KB / MIT</p>
+    </div>
+    <a class="btn" id="dlbtn" href="downloads/vaultspire-1.0.3.jar">
+      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 24.0083V42H42V24"/><path d="M33 23L24 32L15 23"/><path d="M23.9917 6V32"/></svg>
+      <span id="dllabel">Download</span>
+    </a>
+  </div>
+
+  <div class="note" id="loadernote"><b>Paper:</b> fully supported, built against the Paper 1.21.11 API on Java 21.</div>
+</div>
+
+<footer>
+  <div class="foot-inner">
+    <span>Vaultspire 1.0.3 / MIT / by <a href="https://frteddz.github.io">frteddz</a></span>
+    <nav>
+      <a href="changelog.html">Changelog</a>
+      <a href="terms.html">Terms</a>
+      <a href="privacy.html">Privacy</a>
+    </nav>
+    <span>Display font: <a href="https://martcarrefour.itch.io/boxel">Boxel</a> / Art: <a href="https://www.pixellab.ai/">PixelLab API</a></span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var menu = document.getElementById("mobilemenu");
+  var btn = document.getElementById("menubtn");
+  var open = document.getElementById("icon-open");
+  var shut = document.getElementById("icon-shut");
+  function setMenu(state) {
+    menu.classList.toggle("open", state);
+    open.style.display = state ? "none" : "";
+    shut.style.display = state ? "" : "none";
+    btn.setAttribute("aria-expanded", state ? "true" : "false");
+  }
+  btn.addEventListener("click", function () {
+    setMenu(!menu.classList.contains("open"));
+  });
+  var game = document.getElementById("game");
+  var loader = document.getElementById("loader");
+  var release = document.getElementById("release");
+  var dlbtn = document.getElementById("dlbtn");
+  var dllabel = document.getElementById("dllabel");
+  var filename = document.getElementById("filename");
+  var filemeta = document.getElementById("filemeta");
+  var loadernote = document.getElementById("loadernote");
+  var notes = {
+    paper: "Paper: fully supported, built against the Paper 1.21.11 API on Java 21.",
+    purpur: "Purpur: should work, same API as Paper. Tested by the community, not in house.",
+    spigot: "Spigot: untested. The jar targets the Paper API and may miss Paper only calls."
+  };
+  function refresh() {
+    var rel = release.value;
+    var load = loader.value;
+    loadernote.innerHTML = notes[load];
+    if (rel !== "1.0.3") {
+      filename.textContent = "vaultspire-" + rel + ".jar";
+      filemeta.textContent = "Dev testing only. No file ships for this release.";
+      dllabel.textContent = "Unavailable";
+      dlbtn.classList.add("off");
+      dlbtn.removeAttribute("href");
+      return;
+    }
+    filename.textContent = "vaultspire-1.0.3.jar";
+    filemeta.textContent = "Minecraft " + game.value + " / " + load.charAt(0).toUpperCase() + load.slice(1) + " / 62 KB / MIT";
+    dllabel.textContent = "Download";
+    dlbtn.classList.remove("off");
+    dlbtn.setAttribute("href", "downloads/vaultspire-1.0.3.jar");
+  }
+  game.addEventListener("change", refresh);
+  loader.addEventListener("change", refresh);
+  release.addEventListener("change", refresh);
+  refresh();
+})();
+</script>
+</body>
+</html>
